@@ -50,13 +50,13 @@ function PracticeEffect() {
     const handleEdit = () => {
         setValue(false);
         const array = people;
-        array.map((key, index) => {
+        array.foreach((key) => {
             console.log(key);
             const indexOfUpdate = array.findIndex(key => key.id === selectedProduct.id);
             array[indexOfUpdate].name = name;
             array[indexOfUpdate].email = email;
             const studentListOfUpdate = array[indexOfUpdate].students;
-            studentListOfUpdate.map((key, index) => {
+            studentListOfUpdate.foreach(( index) => {
                 studentListOfUpdate[index].teacherName = name;
             })
             setPeople(array.filter(item => item.id !== 0));
@@ -73,7 +73,7 @@ function PracticeEffect() {
         const array = people;
         const array2 = students;
         setStudents(array2.filter(item => item.teacherId !== selectedProduct.id ));
-        setPeople(array.filter(item => item.id != selectedProduct.id));
+        setPeople(array.filter(item => item.id !== selectedProduct.id));
     };
 
     const handlePick = (value) => {
@@ -84,7 +84,6 @@ function PracticeEffect() {
         setSelectedProduct(newOne);
         setEmail(newOne.email);
         setName(newOne.name);
-        console.log(newOne);
         if(value.id === null){
             setStudents(array.filter(item => item.teacherId !== selectedProduct.id ));
         } else {
@@ -97,7 +96,7 @@ function PracticeEffect() {
         setStudents(prev => {
             const newOne = new newStudent(Math.floor(Math.random() * 10001),  studentName, studentEmail, selectedProduct.id, name);
             const newStudentList = [...prev,newOne];
-            array.map((key, index) => {
+            array.foreach((key) => {
                 const indexOfUpdate = array.findIndex(key => key.id === selectedProduct.id);
                 array[indexOfUpdate].students = newStudentList;
             })
@@ -107,7 +106,7 @@ function PracticeEffect() {
 
     const handleEditStudent = () => {
         const array = students;
-        array.map((key, index) => {
+        array.foreach((key) => {
             console.log(key);
             const indexOfUpdate = array.findIndex(key => key.id === selectedStudent.id);
             array[indexOfUpdate].name = studentName;
@@ -118,11 +117,10 @@ function PracticeEffect() {
 
     const handleRemoveStudent = () => {
         const array = students;
-        setStudents(array.filter(item => item.id != selectedStudent.id));
+        setStudents(array.filter(item => item.id !== selectedStudent.id));
     }
 
     const handlePickStudent = (value) => {
-        console.log(selectedStudent);
         const newOne =  new newStudent(value.id,  value.name, value.email, value.teacherName);
         setSelectedStudent(newOne);
         setStudentEmail(newOne.email);
@@ -131,6 +129,8 @@ function PracticeEffect() {
 
     useEffect(() => {
         setValue(true);
+        setStudentName("");
+        setStudentEmail("");
     }, [people, students])
     
   return (
@@ -142,10 +142,10 @@ function PracticeEffect() {
                     <InputText name='email' value={value === true ? email : ""} placeholder='Email' type="text"  onChange={e => setEmail(e.target.value)} />
                 </div>
                 <div style={{marginTop: '20px'}}>
-                    <Button onClick={handleClick} label="Submit" style={{marginRight:'20px'}}/>
-                    <Button onClick={handleRemove} label="Remove" style={{marginRight:'20px'}}/>
-                    <Button onClick={handleEdit} label="Edit" style={{marginRight:'20px'}}/>
-                    <Button onClick={handleRemoveAll} label="Remove All" style={{marginRight:'20px'}}/>
+                    <Button onClick={handleClick} label="Add" style={{marginRight:'15px'}}/>
+                    <Button onClick={handleRemove} label="Remove" style={{marginRight:'15px'}}/>
+                    <Button onClick={handleEdit} label="Edit" style={{marginRight:'15px'}}/>
+                    <Button onClick={handleRemoveAll} label="Remove All" style={{marginRight:'15px'}}/>
                 </div>    
             </div>
             <div className='col-lg-4'>
